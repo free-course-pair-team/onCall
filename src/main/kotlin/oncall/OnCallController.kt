@@ -28,7 +28,7 @@ class OnCallController {
             val isPublicHoliday = PublicHolidays.isPublicHoliday(month.month, day)
             if (currentDayOfWeek.isHoliday || isPublicHoliday) {
                 val emergencyDay = EmergencyDay(
-                    holidayWorkersName[currentHolidayWorkIndex % weekDayWorkersName.size],
+                    Worker(holidayWorkersName[currentHolidayWorkIndex % weekDayWorkersName.size], true),
                     currentDayOfWeek,
                     day,
                     isPublicHoliday
@@ -38,7 +38,7 @@ class OnCallController {
                 emergencyDay
             } else {
                 val emergencyDay = EmergencyDay(
-                    weekDayWorkersName[currentWeekDayWorkIndex % weekDayWorkersName.size],
+                    Worker(weekDayWorkersName[currentWeekDayWorkIndex % weekDayWorkersName.size], false),
                     currentDayOfWeek,
                     day
                 )
