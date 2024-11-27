@@ -5,9 +5,12 @@ class OnCallController {
     private val outputView = OutputView()
 
     fun run() {
-        val (month, startDayOfWeek) = inputView.readMonthAndDayOfWeek()
-        val weekDayWorkersName = inputView.readWeekDayWorkersName()
-        val holidayWorkersName = inputView.readHolidayWorkersName()
+        val (month, startDayOfWeek) = retryInput { inputView.readMonthAndDayOfWeek() }
+        val (weekDayWorkersName, holidayWorkersName) = retryInput {
+            val weekDayWorkersName = inputView.readWeekDayWorkersName()
+            val holidayWorkersName = inputView.readHolidayWorkersName()
+            Pair(weekDayWorkersName, holidayWorkersName)
+        }
         val emergencyMonth = getEmergencyMonth(weekDayWorkersName, holidayWorkersName, month, startDayOfWeek)
         outputView.printResult(emergencyMonth)
     }
@@ -23,12 +26,20 @@ class OnCallController {
         var currentDayOfWeek = startDayOfWeek
         val emergencyDays = month.days.map { day ->
             if (currentDayOfWeek.isHoliday) {
-                val emergencyDay = EmergencyDay(holidayWorkersName[currentHolidayWorkIndex%weekDayWorkersName.size], currentDayOfWeek, day)
+                val emergencyDay = EmergencyDay(
+                    holidayWorkersName[currentHolidayWorkIndex % weekDayWorkersName.size],
+                    currentDayOfWeek,
+                    day
+                )
                 currentDayOfWeek = currentDayOfWeek.nextDayOfWeek()
                 currentHolidayWorkIndex++
                 emergencyDay
             } else {
-                val emergencyDay = EmergencyDay(weekDayWorkersName[currentWeekDayWorkIndex%weekDayWorkersName.size], currentDayOfWeek, day)
+                val emergencyDay = EmergencyDay(
+                    weekDayWorkersName[currentWeekDayWorkIndex % weekDayWorkersName.size],
+                    currentDayOfWeek,
+                    day
+                )
                 currentDayOfWeek = currentDayOfWeek.nextDayOfWeek()
                 currentWeekDayWorkIndex++
                 emergencyDay

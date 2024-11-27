@@ -16,6 +16,7 @@ class InputView {
     }
 
     fun readWeekDayWorkersName(): List<String> {
+        print("평일 비상 근무 순번대로 사원 닉네임을 입력하세요> ")
         val workersName = Console.readLine().split(",").map { it.trim() }
         require(workersName.distinct().size == workersName.size) { "[ERROR] 유효하지 않은 입력 값입니다. 다시 입력해 주세요." }
         require(workersName.size in 5..35) { "[ERROR] 유효하지 않은 입력 값입니다. 다시 입력해 주세요." }
@@ -26,6 +27,7 @@ class InputView {
     }
 
     fun readHolidayWorkersName(): List<String> {
+        print("휴일 비상 근무 순번대로 사원 닉네임을 입력하세요> ")
         val workersName = Console.readLine().split(",").map { it.trim() }
         require(workersName.distinct().size == workersName.size) { "[ERROR] 유효하지 않은 입력 값입니다. 다시 입력해 주세요." }
         require(workersName.size in 5..35) { "[ERROR] 유효하지 않은 입력 값입니다. 다시 입력해 주세요." }
