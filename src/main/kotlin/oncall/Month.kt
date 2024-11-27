@@ -12,5 +12,11 @@ enum class Month(val month: Int, val days: List<Int>) {
     SEPTEMBER(9, (1..30).toList()),
     OCTOBER(10, (1..31).toList()),
     NOVEMBER(11, (1..30).toList()),
-    DECEMBER(12, (1..31).toList())
+    DECEMBER(12, (1..31).toList());
+
+    companion object {
+        fun convertMonth(monthInput: Int): Month {
+            return Month.entries[monthInput - 1]
+        }
+    }
 }

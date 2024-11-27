@@ -7,5 +7,6 @@ class OnCallController {
         val (month, startDayOfWeek) = inputView.readMonthAndDayOfWeek()
         val weekDayWorkersName = inputView.readWeekDayWorkersName()
         val holidayWorkersName = inputView.readHolidayWorkersName()
+        val emergencyMonth = Month.convertMonth(month)
     }
 }
