@@ -5,10 +5,10 @@ class OutputView {
         println()
         for (day in emergencyMonth.getEmergencyDays()) {
             if (day.isPublicHoliday) {
-                println("${emergencyMonth.month}월 ${day.day}일 ${day.dayOfWeek.text}(휴일) ${day.worker.name}")
+                println("${emergencyMonth.month}월 ${day.day}일 ${day.dayOfWeek.text}(휴일) ${day.workerName}")
                 continue
             }
-            println("${emergencyMonth.month}월 ${day.day}일 ${day.dayOfWeek.text} ${day.worker.name}")
+            println("${emergencyMonth.month}월 ${day.day}일 ${day.dayOfWeek.text} ${day.workerName}")
         }
     }
 }
