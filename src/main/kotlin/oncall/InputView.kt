@@ -14,4 +14,14 @@ class InputView {
         require(dayOfWeekInput in DayOfWeek.entries.map { it.text }) { "[ERROR] 유효하지 않은 입력 값입니다. 다시 입력해 주세요." }
         return Pair(month, dayOfWeekInput)
     }
+
+    fun readWeekDayWorkersName(): List<String> {
+        val workersName = Console.readLine().split(",").map { it.trim() }
+        require(workersName.distinct().size == workersName.size) { "[ERROR] 유효하지 않은 입력 값입니다. 다시 입력해 주세요." }
+        require(workersName.size in 5..35) { "[ERROR] 유효하지 않은 입력 값입니다. 다시 입력해 주세요." }
+        workersName.forEach { name ->
+            require(name.length <= 5) { "[ERROR] 유효하지 않은 입력 값입니다. 다시 입력해 주세요." }
+        }
+        return workersName
+    }
 }
