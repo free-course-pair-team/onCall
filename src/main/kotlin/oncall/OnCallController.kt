@@ -25,11 +25,13 @@ class OnCallController {
         var currentHolidayWorkIndex = 0
         var currentDayOfWeek = startDayOfWeek
         val emergencyDays = month.days.map { day ->
-            if (currentDayOfWeek.isHoliday) {
+            val isPublicHoliday = PublicHolidays.isPublicHoliday(month.month, day)
+            if (currentDayOfWeek.isHoliday || isPublicHoliday) {
                 val emergencyDay = EmergencyDay(
                     holidayWorkersName[currentHolidayWorkIndex % weekDayWorkersName.size],
                     currentDayOfWeek,
-                    day
+                    day,
+                    isPublicHoliday
                 )
                 currentDayOfWeek = currentDayOfWeek.nextDayOfWeek()
                 currentHolidayWorkIndex++
