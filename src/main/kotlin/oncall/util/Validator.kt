@@ -11,6 +11,14 @@ class Validator {
         return month to week
     }
 
+    fun validateInputWeekdaysWorkforce(input: String) {
+
+    }
+
+    fun validateInputWeekendsWorkforce(input: String, weekdaysWorkforces: List<String>) {
+
+    }
+
     private fun validateInputMonth(input: String): Int {
         val month = requireNotNull(input.toIntOrNull()) {
             "월은 숫자만 입력이 가능합니다."
@@ -25,5 +33,11 @@ class Validator {
         requireNotNull(Week.entries.find { it.dayName == input }) {
             "일, 월, 화, 수, 목, 금, 토 요일 입력이 가능합니다."
         }
+
+    private fun validateInputWorkforceMaxStringLength(input: String) {
+        require(input.length <= 5) {
+            "이름은 최대 5자리까지 가능합니다."
+        }
+    }
 
 }
