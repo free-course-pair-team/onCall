@@ -5,17 +5,17 @@ import camp.nextstep.edu.missionutils.Console
 class InputView {
 
     fun inputMonthAndStartDayOfWeek(): String {
-        println(INPUT_MONTH_AND_START_DAY_OF_WEEK)
+        print(INPUT_MONTH_AND_START_DAY_OF_WEEK)
         return Console.readLine()
     }
 
     fun inputWeekdaysWorkforce(): String {
-        println(INPUT_WEEKDAYS_WORKFORCE)
+        print(INPUT_WEEKDAYS_WORKFORCE)
         return Console.readLine()
     }
 
     fun inputWeekendsWorkforce(): String {
-        println(INPUT_WEEKENDS_WORKFORCE)
+        print(INPUT_WEEKENDS_WORKFORCE)
         return Console.readLine()
     }
 
