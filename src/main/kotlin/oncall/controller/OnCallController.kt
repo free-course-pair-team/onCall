@@ -4,6 +4,7 @@ import oncall.domain.OnCallMonthGenerator
 import oncall.domain.OnCallWorkerGenerator
 import oncall.model.OnCallWorkSchedule
 import oncall.model.Week
+import oncall.model.Worker
 import oncall.util.Validator
 import oncall.util.retryInput
 import oncall.view.InputView
@@ -25,8 +26,8 @@ class OnCallController(
         val (weekForce, weekendForce) = inputWeekdaysWorkforce()
         val result = onCallWorkerGenerator.generateOnCallWorker(
             initializedOnCallMonth.toMutableList(),
-            weekForce.toMutableList(),
-            weekendForce.toMutableList()
+            weekForce.map { Worker(name = it) }.toMutableList(),
+            weekendForce.map { Worker(name = it) }.toMutableList()
         )
         onCallWorkSchedule.updateResult(result)
         outputView.printOnCallWorkSchedule(onCallWorkSchedule)

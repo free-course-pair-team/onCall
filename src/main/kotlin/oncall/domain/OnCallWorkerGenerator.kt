@@ -1,18 +1,19 @@
 package oncall.domain
 
 import oncall.model.DailyOnCall
+import oncall.model.Worker
 
 class OnCallWorkerGenerator {
 
     fun generateOnCallWorker(
         workSchedule: MutableList<DailyOnCall>,
-        weekForce: MutableList<String>,
-        weekendForce: MutableList<String>,
+        weekForce: MutableList<Worker>,
+        weekendForce: MutableList<Worker>,
     ): List<DailyOnCall> {
-        var previousWorker: String? = null
+        var previousWorker: Worker? = null
         return workSchedule.map {
             val currentWorker = getCurrentWorker(
-                previousWorker ?: "",
+                previousWorker,
                 it.isWeekendAndHoliday,
                 weekendForce,
                 weekForce
@@ -28,11 +29,11 @@ class OnCallWorkerGenerator {
     }
 
     private fun getCurrentWorker(
-        previousWorker: String,
+        previousWorker: Worker?,
         isWeekendAndHoliday: Boolean,
-        weekendForce: MutableList<String>,
-        weekForce: MutableList<String>,
-    ): String {
+        weekendForce: MutableList<Worker>,
+        weekForce: MutableList<Worker>,
+    ): Worker {
         val willCurrentWorker = getWillCurrentWorker(isWeekendAndHoliday, weekendForce, weekForce)
         return generateBackupWorker(
             previousWorker == willCurrentWorker,
@@ -45,9 +46,9 @@ class OnCallWorkerGenerator {
 
     private fun getWillCurrentWorker(
         isWeekendAndHoliday: Boolean,
-        weekendForce: MutableList<String>,
-        weekForce: MutableList<String>,
-    ): String {
+        weekendForce: MutableList<Worker>,
+        weekForce: MutableList<Worker>,
+    ): Worker {
         if (isWeekendAndHoliday) {
             return weekendForce.removeFirst()
         }
@@ -56,11 +57,11 @@ class OnCallWorkerGenerator {
 
     private fun generateBackupWorker(
         isIdenticalWorker: Boolean,
-        currentWorker: String,
+        currentWorker: Worker,
         isWeekendAndHoliday: Boolean,
-        weekendForce: MutableList<String>,
-        weekForce: MutableList<String>,
-    ): String {
+        weekendForce: MutableList<Worker>,
+        weekForce: MutableList<Worker>,
+    ): Worker {
         if (isIdenticalWorker) {
             return popNextWorker(currentWorker, isWeekendAndHoliday, weekendForce, weekForce)
         }
@@ -68,11 +69,11 @@ class OnCallWorkerGenerator {
     }
 
     private fun popNextWorker(
-        currentWorker: String,
+        currentWorker: Worker,
         isWeekendAndHoliday: Boolean,
-        weekendForce: MutableList<String>,
-        weekForce: MutableList<String>,
-    ): String {
+        weekendForce: MutableList<Worker>,
+        weekForce: MutableList<Worker>,
+    ): Worker {
         val workers = getWeekendsOrWeekdaysWorkers(isWeekendAndHoliday, weekendForce, weekForce)
         val currentAssignWorker = workers.removeFirst()
         workers.add(FIRST_INDEX, currentWorker)
@@ -81,9 +82,9 @@ class OnCallWorkerGenerator {
 
     private fun getWeekendsOrWeekdaysWorkers(
         isWeekendAndHoliday: Boolean,
-        weekendForce: MutableList<String>,
-        weekForce: MutableList<String>,
-    ): MutableList<String> {
+        weekendForce: MutableList<Worker>,
+        weekForce: MutableList<Worker>,
+    ): MutableList<Worker> {
         if (isWeekendAndHoliday) return weekendForce
         return weekForce
     }
