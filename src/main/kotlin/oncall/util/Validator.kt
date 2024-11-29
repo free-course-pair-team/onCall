@@ -13,14 +13,15 @@ class Validator {
 
     fun validateInputWorkforce(input: String): List<String> {
         val workforce = input.replace(" ", "").split(",")
-        require(workforce.size in 5..35) { ERROR_MSG_OUT_OF_RANGE_IN_WORKERS }
-        workforce.forEach { name ->
-            validateInputWorkforceMaxStringLength(name)
-        }
+        validateWorkForceSize(workforce)
+        validateInputWorkersNameLength(workforce)
         validateIdenticalName(workforce)
         return workforce
     }
 
+    private fun validateWorkForceSize(workforce: List<String>) {
+        require(workforce.size in 5..35) { ERROR_MSG_OUT_OF_RANGE_IN_WORKERS }
+    }
 
     private fun validateInputMonth(input: String): Int {
         val month = requireNotNull(input.toIntOrNull()) {
@@ -37,9 +38,11 @@ class Validator {
             ERROR_MSG_OUT_OF_RANGE_IN_WEEK_OF_DAY
         }
 
-    private fun validateInputWorkforceMaxStringLength(input: String) {
-        require(input.length <= 5) {
-            ERROR_MSG_CAN_INPUT_FIVE_LENGTH
+    private fun validateInputWorkersNameLength(workforce: List<String>) {
+        workforce.forEach { name ->
+            require(name.length <= 5) {
+                ERROR_MSG_CAN_INPUT_FIVE_LENGTH
+            }
         }
     }
 
@@ -52,15 +55,15 @@ class Validator {
     fun validateWeekAndWeekendScehdule(weekWorkforce: Set<String>, weekendWorkforce: Set<String>) {
         require(weekWorkforce == weekendWorkforce) { ERROR_MSG_NOT_IDENTICAL_WORKERS_SET }
     }
+
     companion object {
         const val ERROR_MSG_OUT_OF_RANGE_IN_WORKERS = "[ERROR] 근무자는 5명에서 35명으로 작성해야합니다."
         const val ERROR_MSG_CAN_INPUT_ONLY_NUMBER = "[ERROR] 월은 숫자만 입력이 가능합니다."
-        const val ERROR_MSG_OUT_OF_RANGE_IN_MONTH= "[ERROR] 1~12까지의 월 입력이 가능합니다."
+        const val ERROR_MSG_OUT_OF_RANGE_IN_MONTH = "[ERROR] 1~12까지의 월 입력이 가능합니다."
         const val ERROR_MSG_OUT_OF_RANGE_IN_WEEK_OF_DAY = "[ERROR] 일, 월, 화, 수, 목, 금, 토 요일 입력이 가능합니다."
         const val ERROR_MSG_CAN_INPUT_FIVE_LENGTH = "[ERROR] 이름은 최대 5자리까지 가능합니다."
         const val ERROR_MSG_CANNOT_INPUT_DUPLICATE_NAME = "[ERROR] 중복된 닉네임은 불가합니다."
         const val ERROR_MSG_NOT_IDENTICAL_WORKERS_SET = "[ERROR] 모든 근무자는 평일, 휴일 모두 근무해야합니다"
-
 
 
     }
