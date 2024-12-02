@@ -18,11 +18,11 @@ class OnCallController {
     }
 
     private fun getMonthOrDayOfWeek(monthAndDayOfWeek: List<String>): Pair<Month, DayOfWeek> {
-        require(monthAndDayOfWeek.size == 2) { "[ERROR] 유효하지 않은 입력 값입니다. 다시 입력해 주세요." }
+        require(monthAndDayOfWeek.size == 2) { Error.INPUT_FORMAT.getMessage() }
         val (monthInput, dayOfWeekInput) = monthAndDayOfWeek
-        val monthNumber = requireNotNull(monthInput.toIntOrNull()) { "[ERROR] 비상 근무 월은 1에서 12의 정수를 입력해 주세요." }
-        require(monthNumber in 1..12) { "[ERROR] 비상 근무 월은 1에서 12의 정수를 입력해 주세요." }
-        require(dayOfWeekInput in DayOfWeek.entries.map { it.text }) { "[ERROR] 요일은 월 화 수 목 금 토 일 만 입력해 주세요" }
+        val monthNumber = requireNotNull(monthInput.toIntOrNull()) { Error.MONTH_RANGE.getMessage() }
+        require(monthNumber in 1..12) { Error.MONTH_RANGE.getMessage() }
+        require(dayOfWeekInput in DayOfWeek.entries.map { it.text }) { Error.DAY_OF_WEEK_RANGE.getMessage() }
         return Pair(Month.convertMonth(monthNumber), DayOfWeek.convertDayOfWeek(dayOfWeekInput))
     }
 
